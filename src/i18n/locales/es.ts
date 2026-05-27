@@ -1,0 +1,151 @@
+export const es = {
+  common: {
+    actions: {
+      activateTrip: 'Activar un viaje',
+      callOffice: 'Llamar a la oficina',
+      cancelTrip: 'Cancelar viaje',
+      changeIdentity: 'Cambiar datos',
+      contactOffice: 'Contactar con la oficina',
+      goBack: 'Volver',
+      goHome: 'Ir al inicio',
+      open: 'Abrir',
+      requestCallback: 'Pedir que me llamen',
+      retry: 'Reintentar',
+      smsOffice: 'Enviar SMS',
+      submit: 'Enviar',
+      searchOtherIdentity: 'Buscar para otro nombre o teléfono',
+      searchTrips: 'Ver viajes',
+      updatePassengerData: 'Cambiar mis datos',
+      viewDetail: 'Ver detalle',
+      viewTrips: 'Ver viajes',
+    },
+    status: {
+      loading: 'Cargando información',
+      noEta: 'ETA no disponible',
+    },
+  },
+  contactOffice: {
+    actionsDescription: 'Aquí tienes todas las formas de contacto en un mismo sitio.',
+    actionsTitle: 'Hablar con la oficina',
+    callDescription: 'Haz una llamada directa si necesitas hablar ahora mismo.',
+    callTitle: 'Llamar ahora',
+    callbackDescription: 'Deja tu teléfono y la oficina te llamará cuando esté disponible.',
+    callbackTitle: 'Pedir que me llamen',
+    description: 'Todo lo necesario para contactar, sin buscar entre varias pantallas.',
+    smsDescription: 'Envía un mensaje corto si prefieres escribir.',
+    smsTitle: 'Enviar un SMS',
+    title: 'Contacto con oficina',
+  },
+  errors: {
+    configurationMissing: 'La app todavía no está configurada. Añade las variables de entorno para continuar.',
+    generic: 'Se ha producido un error inesperado. Inténtalo de nuevo.',
+    notFoundDescription: 'No se ha encontrado la pantalla solicitada.',
+    notFoundTitle: 'Pantalla no encontrada',
+    requestFailed: 'No se pudo completar la solicitud.',
+    unexpectedTitle: 'Ha ocurrido un error',
+  },
+  forms: {
+    date: {
+      label: 'Fecha',
+    },
+    fullName: {
+      label: 'Nombre completo',
+      placeholder: 'Introduce tu nombre completo',
+    },
+    phoneNumber: {
+      label: 'Teléfono',
+      placeholder: 'Introduce tu teléfono',
+    },
+  },
+  home: {
+    cards: {
+      activateTrip: {
+        title: 'Activar un viaje',
+      },
+      contactOffice: {
+        title: 'Contactar con oficina',
+      },
+      manageTrips: {
+        title: 'Ver mis viajes',
+      },
+      requestCall: {
+        title: 'Pedir un viaje',
+      },
+    },
+    description: 'Reserva, consulta tus viajes o contacta con la oficina desde aquí.',
+    kicker: 'App de pasajeros',
+    title: 'Todo lo importante, en una sola pantalla',
+  },
+  navigation: {
+    contactOffice: 'Contacto',
+    home: 'Inicio',
+    notFound: 'No encontrado',
+    requestCall: 'Pedir llamada',
+    settings: 'Ajustes',
+    tripAccess: 'Acceso a viajes',
+    tripDetail: 'Detalle del viaje',
+    trips: 'Mis viajes',
+    tripsResults: 'Resultados',
+  },
+  requestCall: {
+    description: 'La oficina usará tus datos para llamarte y confirmar la reserva.',
+    formDescription: 'Esta pantalla ya está conectada al endpoint de solicitud de llamada.',
+    formTitle: 'Datos del pasajero',
+    success: 'Tu solicitud de llamada se ha enviado correctamente.',
+    title: 'Pedir que me llamen',
+  },
+  settings: {
+    description: 'Aquí irán las opciones de la aplicación.',
+    title: 'Ajustes',
+  },
+  tripAccess: {
+    description: 'Usa la misma identidad que tiene la oficina registrada para localizar tus viajes.',
+    formDescription: 'Introduce tus datos para buscar tus viajes.',
+    formTitle: 'Identifícate',
+    redirectDescription: 'Tus datos de pasajero ahora se gestionan directamente desde la pantalla de viajes.',
+    savedTitle: 'Hola, {{name}}. ¿Para qué día quieres consultar tus viajes?',
+    title: 'Acceder a mis viajes',
+  },
+  tripCard: {
+    dropoff: 'Destino',
+    pickup: 'Recogida',
+    reference: 'Referencia',
+  },
+  tripDetail: {
+    actionsDescription: 'Activa o cancela el viaje cuando esas acciones estén disponibles.',
+    actionsTitle: 'Acciones del viaje',
+    contactDescription: 'Usa los canales de la oficina si necesitas ayuda.',
+    contactTitle: '¿Necesitas ayuda?',
+    emptyDescription: 'No se pudo cargar el viaje seleccionado.',
+    emptyTitle: 'Viaje no disponible',
+    fields: {
+      dropoff: 'Destino',
+      eta: 'ETA',
+      pickup: 'Recogida',
+      pickupAt: 'Hora de recogida',
+      status: 'Estado',
+    },
+    summaryTitle: 'Resumen del viaje',
+  },
+  trips: {
+    activePassengerDescription: 'Consultando viajes con el teléfono {{phoneNumber}}.',
+    activePassengerTitle: 'Datos del pasajero guardados',
+    description: 'Consulta el estado actual de tus viajes y abre cada uno para ver más detalle.',
+    emptyDescription: 'No se han encontrado viajes para esta información de pasajero.',
+    emptyTitle: 'No hay viajes disponibles',
+    passenger: 'Pasajero',
+    resultsTitle: 'Tus viajes',
+    title: 'Mis viajes',
+  },
+  validation: {
+    date: {
+      required: 'Selecciona una fecha.',
+    },
+    fullName: {
+      required: 'Introduce un nombre completo válido.',
+    },
+    phoneNumber: {
+      invalid: 'Introduce un número de teléfono válido.',
+    },
+  },
+};

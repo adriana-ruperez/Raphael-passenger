@@ -1,0 +1,151 @@
+export const en = {
+  common: {
+    actions: {
+      activateTrip: 'Activate a trip',
+      callOffice: 'Call office',
+      cancelTrip: 'Cancel trip',
+      changeIdentity: 'Change details',
+      contactOffice: 'Contact office',
+      goBack: 'Go back',
+      goHome: 'Go home',
+      open: 'Open',
+      requestCallback: 'Request a callback',
+      retry: 'Try again',
+      smsOffice: 'Send SMS',
+      submit: 'Submit',
+      searchOtherIdentity: 'Search for another name or phone',
+      searchTrips: 'View trips',
+      updatePassengerData: 'Change my details',
+      viewDetail: 'View detail',
+      viewTrips: 'View trips',
+    },
+    status: {
+      loading: 'Loading information',
+      noEta: 'ETA not available',
+    },
+  },
+  contactOffice: {
+    actionsDescription: 'All contact options are kept together in one simple place.',
+    actionsTitle: 'Contact the office',
+    callDescription: 'Start a direct call if you need to speak with the office right away.',
+    callTitle: 'Call now',
+    callbackDescription: 'Leave your phone number and the office will call you back when available.',
+    callbackTitle: 'Request a callback',
+    description: 'Everything you need to reach the office without jumping across screens.',
+    smsDescription: 'Send a short message if you prefer writing.',
+    smsTitle: 'Send an SMS',
+    title: 'Office contact',
+  },
+  errors: {
+    configurationMissing: 'The app is not configured yet. Add environment values to continue.',
+    generic: 'An unexpected error occurred. Please try again.',
+    notFoundDescription: 'The requested screen could not be found.',
+    notFoundTitle: 'Screen not found',
+    requestFailed: 'We could not complete the request.',
+    unexpectedTitle: 'Something went wrong',
+  },
+  forms: {
+    date: {
+      label: 'Date',
+    },
+    fullName: {
+      label: 'Full name',
+      placeholder: 'Enter your full name',
+    },
+    phoneNumber: {
+      label: 'Phone number',
+      placeholder: 'Enter your phone number',
+    },
+  },
+  home: {
+    cards: {
+      activateTrip: {
+        title: 'Activate a trip',
+      },
+      contactOffice: {
+        title: 'Contact office',
+      },
+      manageTrips: {
+        title: 'View my trips',
+      },
+      requestCall: {
+        title: 'Request a ride',
+      },
+    },
+    description: 'Book, review your trips, or contact the office from here.',
+    kicker: 'Passenger app',
+    title: 'Everything important, on one screen',
+  },
+  navigation: {
+    contactOffice: 'Contact office',
+    home: 'Home',
+    notFound: 'Not found',
+    requestCall: 'Request call',
+    settings: 'Settings',
+    tripAccess: 'Access trips',
+    tripDetail: 'Trip detail',
+    trips: 'My trips',
+    tripsResults: 'Results',
+  },
+  requestCall: {
+    description: 'The office will use your details to contact you and confirm the reservation.',
+    formDescription: 'This screen is connected to the callback request endpoint.',
+    formTitle: 'Passenger details',
+    success: 'Your callback request was sent successfully.',
+    title: 'Request a callback',
+  },
+  settings: {
+    description: 'App options will appear here.',
+    title: 'Settings',
+  },
+  tripAccess: {
+    description: 'Use the same identity the office has on file to locate your trips.',
+    formDescription: 'Enter your details to search for your trips.',
+    formTitle: 'Identify yourself',
+    redirectDescription: 'Your passenger details are now managed directly from the trips screen.',
+    savedTitle: 'Hi, {{name}}. Which day do you want to check your trips for?',
+    title: 'Access my trips',
+  },
+  tripCard: {
+    dropoff: 'Dropoff',
+    pickup: 'Pickup',
+    reference: 'Reference',
+  },
+  tripDetail: {
+    actionsDescription: 'Activate or cancel the trip when those actions are available.',
+    actionsTitle: 'Trip actions',
+    contactDescription: 'Use the office channels if you need assistance.',
+    contactTitle: 'Need help?',
+    emptyDescription: 'We could not load the selected trip.',
+    emptyTitle: 'Trip not available',
+    fields: {
+      dropoff: 'Dropoff',
+      eta: 'ETA',
+      pickup: 'Pickup',
+      pickupAt: 'Pickup time',
+      status: 'Status',
+    },
+    summaryTitle: 'Trip summary',
+  },
+  trips: {
+    activePassengerDescription: 'Viewing trips for phone number {{phoneNumber}}.',
+    activePassengerTitle: 'Saved passenger details',
+    description: 'View the current status of your trips and open each one for more details.',
+    emptyDescription: 'No trips were found for this passenger information.',
+    emptyTitle: 'No trips available',
+    passenger: 'Passenger',
+    resultsTitle: 'Your trips',
+    title: 'My trips',
+  },
+  validation: {
+    date: {
+      required: 'Select a date.',
+    },
+    fullName: {
+      required: 'Enter a valid full name.',
+    },
+    phoneNumber: {
+      invalid: 'Enter a valid phone number.',
+    },
+  },
+};

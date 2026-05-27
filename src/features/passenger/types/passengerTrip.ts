@@ -1,0 +1,12 @@
+export type PassengerTrip = {
+  canActivate: boolean;
+  canCancel: boolean;
+  dropoffAddress: string;
+  etaMinutes: number | null;
+  id: string;
+  patientName?: string;
+  pickupAddress: string;
+  pickupAtLabel: string;
+  referenceCode: string;
+  statusLabel: string;
+};
