@@ -40,7 +40,15 @@ export default function TripsResultsScreen() {
 
   return (
     <Screen contentContainerStyle={styles.content}>
-      <AppBar centered title={t('trips.resultsTitle')} />
+      <AppBar
+        centered
+        leftAction={{
+          accessibilityLabel: t('common.actions.goBack'),
+          icon: 'arrow-back',
+          onPress: () => router.back(),
+        }}
+        title={t('trips.resultsTitle')}
+      />
 
       {tripsQuery.isLoading ? <LoadingState label={t('common.status.loading')} /> : null}
 
@@ -53,8 +61,8 @@ export default function TripsResultsScreen() {
       ) : null}
 
       <View style={styles.list}>
-        {trips.map((trip) => (
-          <TripSummaryCard key={trip.id} trip={trip} />
+        {trips.map((trip, index) => (
+          <TripSummaryCard key={buildTripListKey(trip, index)} trip={trip} />
         ))}
       </View>
     </Screen>
@@ -63,6 +71,18 @@ export default function TripsResultsScreen() {
 
 function compareTripsByTime(a: PassengerTrip, b: PassengerTrip) {
   return parseTime(a.pickupAtLabel) - parseTime(b.pickupAtLabel);
+}
+
+function buildTripListKey(trip: PassengerTrip, index: number): string {
+  return [
+    trip.id,
+    trip.referenceCode,
+    trip.statusLabel,
+    trip.pickupAtLabel,
+    trip.pickupAddress,
+    trip.dropoffAddress,
+    index,
+  ].join(':');
 }
 
 function parseTime(value: string): number {

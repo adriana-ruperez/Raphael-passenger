@@ -15,42 +15,63 @@ export function TripSummaryCard({
   onPress?: () => void;
   trip: PassengerTrip;
 }) {
+  const isPickup = trip.eventType === 'pickup';
+  const cardTone = isPickup ? pickupTone : dropoffTone;
+  const locationLabel = t(isPickup ? 'tripCard.pickup' : 'tripCard.dropoff');
+  const locationValue = isPickup ? trip.pickupAddress : trip.dropoffAddress;
+  const eventLabel = t(isPickup ? 'tripCard.pickupEvent' : 'tripCard.dropoffEvent');
+  const hasEta = trip.etaMinutes !== null;
+  const etaLabel = hasEta ? formatEta(trip.etaMinutes) : null;
+  const timeLabel = formatTripTime(trip.pickupAtLabel);
+
   return (
-    <View style={styles.card}>
-      <View style={styles.accent} />
-      <View style={styles.header}>
-        <View style={styles.referenceBlock}>
-          <Text style={styles.label}>{t('tripCard.reference')}</Text>
-          <Text style={styles.reference}>{trip.referenceCode}</Text>
+    <View
+      style={[
+        styles.card,
+        {
+          backgroundColor: cardTone.surface,
+          borderColor: cardTone.border,
+        },
+      ]}>
+      <View style={[styles.accent, { backgroundColor: cardTone.accent }]} />
+      <View style={styles.topRow}>
+        <Text style={[styles.title, { color: cardTone.accent }]}>{eventLabel}</Text>
+        {timeLabel ? <Text style={styles.time}>{timeLabel}</Text> : null}
+      </View>
+
+      <View style={styles.routeBlock}>
+        <Text style={styles.value}>{locationValue}</Text>
+      </View>
+
+      {etaLabel ? (
+        <View style={styles.metaRow}>
+          <Text style={styles.label}>{t('tripCard.etaLabel')}</Text>
+          <Text style={[styles.metaValue, { color: cardTone.accent }]}>{etaLabel}</Text>
         </View>
-        <View style={styles.statusBadge}>
-          <Text style={styles.status}>{trip.statusLabel}</Text>
-        </View>
-      </View>
+      ) : null}
 
-      <View style={styles.route}>
-        <Text style={styles.label}>{t('tripCard.pickup')}</Text>
-        <Text style={styles.value}>{trip.pickupAddress}</Text>
-      </View>
-
-      <View style={styles.route}>
-        <Text style={styles.label}>{t('tripCard.dropoff')}</Text>
-        <Text style={styles.value}>{trip.dropoffAddress}</Text>
-      </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.eta}>{formatEta(trip.etaMinutes)}</Text>
-        {onPress ? (
+      {onPress ? (
+        <View style={styles.footer}>
           <AppButton label={t('common.actions.viewDetail')} onPress={onPress} variant="secondary" />
-        ) : null}
-      </View>
+        </View>
+      ) : null}
     </View>
   );
 }
 
+function formatTripTime(value: string): string {
+  const match = value.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*([AaPp][Mm])?/);
+  if (!match) {
+    return value;
+  }
+
+  const [, hours, minutes, suffix] = match;
+
+  return suffix ? `${hours}:${minutes} ${suffix.toUpperCase()}` : `${hours}:${minutes}`;
+}
+
 const styles = StyleSheet.create({
   accent: {
-    backgroundColor: palette.brand700,
     borderBottomLeftRadius: 4,
     borderTopLeftRadius: 4,
     bottom: 0,
@@ -60,25 +81,20 @@ const styles = StyleSheet.create({
     width: 6,
   },
   card: {
-    backgroundColor: palette.surface,
-    borderColor: palette.lineStrong,
     borderRadius: 8,
     borderWidth: 1,
-    gap: spacing.lg,
-    padding: spacing.xl,
-    paddingLeft: 34,
+    gap: spacing.md,
+    padding: spacing.lg,
+    paddingLeft: 28,
   },
-  eta: {
-    ...typography.bodySmall,
-    color: palette.brand700,
+  title: {
+    ...typography.h3,
     fontWeight: '700',
   },
   footer: {
-    gap: spacing.md,
-  },
-  header: {
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     flexDirection: 'row',
+    gap: spacing.sm,
     justifyContent: 'space-between',
   },
   label: {
@@ -86,30 +102,47 @@ const styles = StyleSheet.create({
     color: palette.ink600,
     textTransform: 'uppercase',
   },
-  reference: {
-    ...typography.h3,
-    color: palette.ink900,
+  metaRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.sm,
   },
-  referenceBlock: {
-    flex: 1,
-    gap: spacing.xs,
-  },
-  route: {
-    gap: spacing.xs,
-  },
-  status: {
+  metaValue: {
     ...typography.bodySmall,
-    color: palette.brand700,
     fontWeight: '700',
   },
-  statusBadge: {
-    backgroundColor: '#140C517A',
-    borderRadius: 8,
+  routeBlock: {
+    backgroundColor: palette.surface,
+    borderRadius: 10,
+    gap: 4,
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
+    paddingVertical: spacing.sm,
+  },
+  time: {
+    ...typography.caption,
+    color: palette.ink500,
+  },
+  topRow: {
+    alignItems: 'baseline',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: spacing.md,
   },
   value: {
-    ...typography.body,
+    ...typography.bodySmall,
     color: palette.ink900,
+    fontWeight: '700',
   },
 });
+
+const pickupTone = {
+  accent: palette.brand700,
+  border: palette.lineStrong,
+  surface: '#F7FAFC',
+};
+
+const dropoffTone = {
+  accent: palette.success700,
+  border: palette.successLine,
+  surface: '#F8FCF9',
+};
