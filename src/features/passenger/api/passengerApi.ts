@@ -54,19 +54,22 @@ function mapPatientEtaTrip(raw: unknown): PassengerTrip {
     JSON.stringify(trip);
   const primaryTime =
     pickFirstString(trip, ['pickup', 'appt', 'eta', 'arrive', 'perform']) ?? '';
-  const address = pickFirstString(trip, ['address']) ?? '';
   const eventType = Number(trip.eventType);
   const isPickup = eventType === 1;
   const isDropoff = eventType === 2;
+  const pickupAddress = pickFirstString(trip, ['address', 'pickupAddress', 'pickup']) ?? '';
+  const dropoffAddress =
+    pickFirstString(trip, ['destination', 'dropoffAddress', 'dropoff', 'address']) ?? '';
 
   return {
     canActivate: false,
     canCancel: false,
-    dropoffAddress: isDropoff ? address : '',
+    dropoffAddress: isDropoff ? dropoffAddress : '',
     etaMinutes: pickEtaMinutes(trip),
+    eventType: isPickup ? 'pickup' : isDropoff ? 'dropoff' : 'unknown',
     id,
     patientName: pickFirstString(trip, ['patient', 'patientName']),
-    pickupAddress: isPickup || !isDropoff ? address : '',
+    pickupAddress: isPickup || !isDropoff ? pickupAddress : '',
     pickupAtLabel: primaryTime,
     referenceCode: pickFirstString(trip, ['referenceCode', 'tripId', 'id']) ?? id,
     statusLabel:
