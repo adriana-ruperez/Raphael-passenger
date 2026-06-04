@@ -1,16 +1,18 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useTranslation } from 'react-i18next';
 
 import { RouteErrorBoundary } from '@/src/components/feedback/RouteErrorBoundary';
 import { AppProviders } from '@/src/providers/AppProviders';
 import { palette } from '@/src/theme/colors';
-import { t } from '@/src/i18n';
 
 export function ErrorBoundary(props: { error: Error; retry: () => void }) {
   return <RouteErrorBoundary {...props} />;
 }
 
 export default function RootLayout() {
+  const { t } = useTranslation();
+
   return (
     <AppProviders>
       <StatusBar style="dark" />

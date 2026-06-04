@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { AppButton } from '@/src/components/ui/AppButton';
 import { PassengerTrip } from '@/src/features/passenger/types/passengerTrip';
-import { t } from '@/src/i18n';
 import { palette } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
 import { typography } from '@/src/theme/typography';
@@ -15,6 +15,7 @@ export function TripSummaryCard({
   onPress?: () => void;
   trip: PassengerTrip;
 }) {
+  const { t } = useTranslation();
   const isPickup = trip.eventType === 'pickup';
   const cardTone = isPickup ? pickupTone : dropoffTone;
   const locationLabel = t(isPickup ? 'tripCard.pickup' : 'tripCard.dropoff');

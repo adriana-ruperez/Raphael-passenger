@@ -1,5 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Linking, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@/src/components/feedback/EmptyState';
 import { InlineMessage } from '@/src/components/feedback/InlineMessage';
@@ -11,7 +12,6 @@ import { SectionCard } from '@/src/components/ui/SectionCard';
 import { useActivateTripMutation, useCancelTripMutation } from '@/src/features/passenger/hooks/usePassengerMutations';
 import { useTripDetailsQuery } from '@/src/features/passenger/hooks/usePassengerQueries';
 import { env } from '@/src/config/env';
-import { t } from '@/src/i18n';
 import { palette } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
 import { typography } from '@/src/theme/typography';
@@ -20,6 +20,7 @@ import { getErrorMessage } from '@/src/utils/errors';
 
 export default function TripDetailScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ tripId: string }>();
   const tripId = typeof params.tripId === 'string' ? params.tripId : '';
   const detailsQuery = useTripDetailsQuery(tripId);

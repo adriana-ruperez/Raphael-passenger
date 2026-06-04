@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@/src/components/feedback/EmptyState';
 import { LoadingState } from '@/src/components/feedback/LoadingState';
@@ -10,13 +11,13 @@ import { AppButton } from '@/src/components/ui/AppButton';
 import { TripSummaryCard } from '@/src/components/ui/TripSummaryCard';
 import { useTripsQuery } from '@/src/features/passenger/hooks/usePassengerQueries';
 import { PassengerTrip } from '@/src/features/passenger/types/passengerTrip';
-import { t } from '@/src/i18n';
 import { useSessionStore } from '@/src/stores/sessionStore';
 import { spacing } from '@/src/theme/spacing';
 import { formatDateForQuery } from '@/src/utils/formatters';
 
 export default function TripsResultsScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const passengerName = useSessionStore((state) => state.passengerName);
   const passengerPhone = useSessionStore((state) => state.passengerPhone);
   const tripDate = useSessionStore((state) => state.tripDate);

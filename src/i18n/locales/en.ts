@@ -78,6 +78,13 @@ export const en = {
       },
     },
     description: 'Book, review your trips, or contact the office from here.',
+    identity: {
+      closeLabel: 'Close identification form',
+      eyebrow: 'Passenger details',
+      saveLabel: 'Save my details',
+      title: 'Identify yourself',
+      toggleLabel: 'Open identification form',
+    },
     kicker: 'Passenger app',
     title: 'Everything important, on one screen',
   },

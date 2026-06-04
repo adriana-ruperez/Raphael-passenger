@@ -1,14 +1,16 @@
 import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Screen } from '@/src/components/layout/Screen';
 import { AppButton } from '@/src/components/ui/AppButton';
-import { t } from '@/src/i18n';
 import { palette } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
 import { typography } from '@/src/theme/typography';
 
 export default function NotFoundScreen() {
+  const { t } = useTranslation();
+
   return (
     <Screen contentContainerStyle={styles.content}>
       <View style={styles.block}>

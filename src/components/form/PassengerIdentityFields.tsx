@@ -1,7 +1,7 @@
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { AppInput } from '@/src/components/form/AppInput';
-import { t } from '@/src/i18n';
 
 type PassengerIdentityFieldValues = FieldValues & {
   fullName: string;
@@ -17,6 +17,7 @@ export function PassengerIdentityFields<TFieldValues extends PassengerIdentityFi
   control,
   variant = 'default',
 }: PassengerIdentityFieldsProps<TFieldValues>) {
+  const { t } = useTranslation();
   const fullNameField = 'fullName' as Path<TFieldValues>;
   const phoneNumberField = 'phoneNumber' as Path<TFieldValues>;
 
