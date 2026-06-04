@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Raphael Riders",
-    "slug": "mercurio-passenger",
+    "slug": "raphael-passenger",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icono_sin_fondo-2-app-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "scheme": "mercurio-passenger",
+    "scheme": "raphael-passenger",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
