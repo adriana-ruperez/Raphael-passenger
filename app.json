@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Mercurio Passenger",
+    "name": "Raphael Riders",
     "slug": "mercurio-passenger",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icono_sin_fondo-2-app-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "scheme": "mercurio-passenger",
@@ -14,13 +14,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.raphael.riders",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icono_sin_fondo-2-app-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "package": "com.raphael.riders",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },

@@ -30,7 +30,7 @@ export default function HomeScreen() {
 
       <View style={styles.hero}>
         <Image
-          source={require('../../assets/icono_sin_fondo.png')}
+          source={require('../../assets/icono_sin_fondo-2.png')}
           style={styles.logo}
           resizeMode="contain"
         />
