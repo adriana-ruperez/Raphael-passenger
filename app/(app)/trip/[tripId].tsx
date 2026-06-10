@@ -73,7 +73,7 @@ export default function TripDetailScreen() {
               <TripMeta label={t('tripDetail.fields.dropoff')} value={trip.dropoffAddress} />
               <TripMeta
                 label={t('tripDetail.fields.eta')}
-                value={formatEta(trip.etaMinutes)}
+                value={formatEta(trip.eta ?? trip.etaMinutes)}
               />
             </View>
           </SectionCard>

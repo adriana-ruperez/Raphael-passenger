@@ -21,8 +21,7 @@ export function TripSummaryCard({
   const locationLabel = t(isPickup ? 'tripCard.pickup' : 'tripCard.dropoff');
   const locationValue = isPickup ? trip.pickupAddress : trip.dropoffAddress;
   const eventLabel = t(isPickup ? 'tripCard.pickupEvent' : 'tripCard.dropoffEvent');
-  const hasEta = trip.etaMinutes !== null;
-  const etaLabel = hasEta ? formatEta(trip.etaMinutes) : null;
+  const etaLabel = formatEta(trip.eta ?? trip.etaMinutes);
   const timeLabel = formatTripTime(trip.pickupAtLabel);
 
   return (
@@ -44,7 +43,7 @@ export function TripSummaryCard({
         <Text style={styles.value}>{locationValue}</Text>
       </View>
 
-      {etaLabel ? (
+      {etaLabel !== t('common.status.noEta') ? (
         <View style={styles.metaRow}>
           <Text style={styles.label}>{t('tripCard.etaLabel')}</Text>
           <Text style={[styles.metaValue, { color: cardTone.accent }]}>{etaLabel}</Text>

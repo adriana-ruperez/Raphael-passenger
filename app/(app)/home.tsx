@@ -179,7 +179,8 @@ export default function HomeScreen() {
                   <AppInput
                     label={t('forms.phoneNumber.label')}
                     placeholder={t('forms.phoneNumber.placeholder')}
-                    keyboardType="phone-pad"
+                    inputMode="numeric"
+                    keyboardType="number-pad"
                     textContentType="telephoneNumber"
                     autoCapitalize="none"
                     value={field.value}
