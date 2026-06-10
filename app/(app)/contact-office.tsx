@@ -1,23 +1,62 @@
-import { useRouter } from 'expo-router';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Ionicons } from '@expo/vector-icons';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
+import { PassengerIdentityFields } from '@/src/components/form/PassengerIdentityFields';
 import { Screen } from '@/src/components/layout/Screen';
 import { AppBar } from '@/src/components/navigation/AppBar';
 import { AppButton } from '@/src/components/ui/AppButton';
+import { SectionCard } from '@/src/components/ui/SectionCard';
 import { env } from '@/src/config/env';
+import {
+  createRequestCallbackFormSchema,
+  type RequestCallbackFormValues,
+} from '@/src/features/passenger/schemas/requestCallbackSchema';
+import { useSessionStore } from '@/src/stores/sessionStore';
 import { palette } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
 import { typography } from '@/src/theme/typography';
 import { formatPhoneForLink } from '@/src/utils/formatters';
-import { t } from '@/src/i18n';
+import { normalizePhone } from '@/src/utils/phone';
 
 const COMPANY_PHONE = '+1 407-259-4421';
 const COMPANY_WEBSITE = 'https://milanestransport.com';
 const COMPANY_EMAIL = 'info@milanestransport.com';
 
 export default function ContactOfficeScreen() {
-  const router = useRouter();
+  const { t, i18n } = useTranslation();
+  const hasHydrated = useSessionStore((state) => state.hasHydrated);
+  const passengerName = useSessionStore((state) => state.passengerName);
+  const passengerPhone = useSessionStore((state) => state.passengerPhone);
+  const setPassengerIdentity = useSessionStore((state) => state.setPassengerIdentity);
+  const [identityCardVisible, setIdentityCardVisible] = useState(false);
+  const hasSavedIdentity = Boolean(passengerName && passengerPhone);
+  const identitySchema = useMemo(
+    () => createRequestCallbackFormSchema(t),
+    [t, i18n.resolvedLanguage],
+  );
+  const { control, formState, handleSubmit, reset } = useForm<RequestCallbackFormValues>({
+    defaultValues: {
+      fullName: passengerName,
+      phoneNumber: passengerPhone,
+    },
+    mode: 'onChange',
+    resolver: zodResolver(identitySchema),
+  });
+
+  useEffect(() => {
+    if (!hasHydrated) {
+      return;
+    }
+
+    reset({
+      fullName: passengerName,
+      phoneNumber: passengerPhone,
+    });
+  }, [hasHydrated, passengerName, passengerPhone, reset]);
 
   const handleCall = async () => {
     if (!env.officePhone) {
@@ -32,8 +71,44 @@ export default function ContactOfficeScreen() {
       return;
     }
 
-    await Linking.openURL(`sms:${formatPhoneForLink(env.officeSmsPhone)}`);
+    const smsBody = buildOfficeSmsBody({
+      passengerName,
+      passengerPhone,
+    });
+    const separator = Platform.OS === 'ios' ? '&' : '?';
+    await Linking.openURL(
+      `sms:${formatPhoneForLink(env.officeSmsPhone)}${separator}body=${encodeURIComponent(smsBody)}`,
+    );
   };
+
+  const handleRequestCallback = async () => {
+    if (!hasHydrated) {
+      return;
+    }
+
+    if (!hasSavedIdentity) {
+      setIdentityCardVisible(true);
+      return;
+    }
+
+    if (!env.officeSmsPhone) {
+      return;
+    }
+
+    const smsBody = buildContactMeSmsBody({
+      passengerName,
+      passengerPhone,
+    });
+    const separator = Platform.OS === 'ios' ? '&' : '?';
+    await Linking.openURL(
+      `sms:${formatPhoneForLink(env.officeSmsPhone)}${separator}body=${encodeURIComponent(smsBody)}`,
+    );
+  };
+
+  const handleSaveIdentity = handleSubmit((values) => {
+    setPassengerIdentity(values.fullName.trim(), normalizePhone(values.phoneNumber));
+    setIdentityCardVisible(false);
+  });
 
   const handleCallCompany = async () => {
     await Linking.openURL(`tel:${formatPhoneForLink(COMPANY_PHONE)}`);
@@ -71,6 +146,17 @@ export default function ContactOfficeScreen() {
         />
       </View>
 
+      {identityCardVisible ? (
+        <SectionCard title={t('home.identity.title')} variant="glass">
+          <PassengerIdentityFields control={control} variant="glass" />
+          <AppButton
+            label={t('home.identity.saveLabel')}
+            onPress={handleSaveIdentity}
+            disabled={!formState.isValid}
+          />
+        </SectionCard>
+      ) : null}
+
       <View style={styles.actions}>
         <AppButton
           label={t('common.actions.callOffice')}
@@ -85,7 +171,7 @@ export default function ContactOfficeScreen() {
         />
         <AppButton
           label={t('common.actions.requestCallback')}
-          onPress={() => router.push('/(app)/request-call')}
+          onPress={handleRequestCallback}
           variant="secondary"
         />
       </View>
@@ -154,3 +240,42 @@ const styles = StyleSheet.create({
     flex: 0.6,
   },
 });
+
+function buildOfficeSmsBody({
+  passengerName,
+  passengerPhone,
+}: {
+  passengerName: string;
+  passengerPhone: string;
+}) {
+  const details = [];
+
+  if (passengerName.trim()) {
+    details.push(passengerName.trim());
+  }
+
+  if (passengerPhone.trim()) {
+    details.push(normalizePhone(passengerPhone));
+  }
+
+  if (details.length === 0) {
+    return '';
+  }
+
+  return `${details.join('\n')}\n\n`;
+}
+
+function buildContactMeSmsBody({
+  passengerName,
+  passengerPhone,
+}: {
+  passengerName: string;
+  passengerPhone: string;
+}) {
+  return [
+    passengerName.trim(),
+    normalizePhone(passengerPhone),
+    '',
+    'Please contact me.',
+  ].join('\n');
+}

@@ -3,6 +3,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { AppDateField } from '@/src/components/form/AppDateField';
 import { PassengerIdentityFields } from '@/src/components/form/PassengerIdentityFields';
@@ -11,10 +13,9 @@ import { AppBar } from '@/src/components/navigation/AppBar';
 import { AppButton } from '@/src/components/ui/AppButton';
 import { SectionCard } from '@/src/components/ui/SectionCard';
 import {
-  tripAccessFormSchema,
+  createTripAccessFormSchema,
   type TripAccessFormValues,
 } from '@/src/features/passenger/schemas/tripAccessSchema';
-import { t } from '@/src/i18n';
 import { useSessionStore } from '@/src/stores/sessionStore';
 import { palette } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
@@ -23,16 +24,22 @@ import { normalizePhone } from '@/src/utils/phone';
 
 export default function TripsScreen() {
   const router = useRouter();
+  const { t, i18n } = useTranslation();
   const passengerName = useSessionStore((state) => state.passengerName);
   const passengerPhone = useSessionStore((state) => state.passengerPhone);
   const tripDate = useSessionStore((state) => state.tripDate);
+  const hasHydrated = useSessionStore((state) => state.hasHydrated);
   const clearPassengerIdentity = useSessionStore((state) => state.clearPassengerIdentity);
   const setPassengerIdentity = useSessionStore((state) => state.setPassengerIdentity);
   const setTripDate = useSessionStore((state) => state.setTripDate);
   const hasSavedIdentity = Boolean(passengerName && passengerPhone);
   const defaultDate = tripDate || new Date().toISOString();
+  const tripAccessFormSchema = useMemo(
+    () => createTripAccessFormSchema(t),
+    [t, i18n.resolvedLanguage],
+  );
 
-  const { control, formState, handleSubmit } = useForm<TripAccessFormValues>({
+  const { control, formState, handleSubmit, reset } = useForm<TripAccessFormValues>({
     defaultValues: {
       date: defaultDate,
       fullName: passengerName,
@@ -41,6 +48,18 @@ export default function TripsScreen() {
     mode: 'onChange',
     resolver: zodResolver(tripAccessFormSchema),
   });
+
+  useEffect(() => {
+    if (!hasHydrated) {
+      return;
+    }
+
+    reset({
+      date: tripDate || new Date().toISOString(),
+      fullName: passengerName,
+      phoneNumber: passengerPhone,
+    });
+  }, [hasHydrated, passengerName, passengerPhone, reset, tripDate]);
 
   const onSubmit = handleSubmit((values) => {
     setPassengerIdentity(values.fullName, normalizePhone(values.phoneNumber));
@@ -52,7 +71,9 @@ export default function TripsScreen() {
     <Screen scrollable={false} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
       <AppBar centered title={t('navigation.trips')} />
 
-      {hasSavedIdentity ? (
+      {!hasHydrated ? <View style={styles.hydrationSpacer} /> : null}
+
+      {hasHydrated && hasSavedIdentity ? (
         <View style={styles.savedLayout}>
           <View style={styles.savedIdentityBlock}>
             <Text style={styles.savedEyebrow}>{t('trips.activePassengerTitle')}</Text>
@@ -92,7 +113,9 @@ export default function TripsScreen() {
             />
           </View>
         </View>
-      ) : (
+      ) : null}
+
+      {hasHydrated && !hasSavedIdentity ? (
         <SectionCard title={t('tripAccess.formTitle')} variant="glass">
           <PassengerIdentityFields control={control} variant="glass" />
           <Controller
@@ -116,7 +139,7 @@ export default function TripsScreen() {
             disabled={!formState.isValid}
           />
         </SectionCard>
-      )}
+      ) : null}
     </Screen>
   );
 }
@@ -154,6 +177,9 @@ const styles = StyleSheet.create({
   },
   editActionPressed: {
     opacity: 0.7,
+  },
+  hydrationSpacer: {
+    flex: 1,
   },
   savedActions: {
     gap: spacing.md,

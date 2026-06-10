@@ -1,26 +1,28 @@
 {
   "expo": {
-    "name": "Mercurio Passenger",
-    "slug": "mercurio-passenger",
+    "name": "Raphael Riders",
+    "slug": "raphael-passenger",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icono_sin_fondo-2-app-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "scheme": "mercurio-passenger",
+    "scheme": "raphael-passenger",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.raphael.riders",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icono_sin_fondo-2-app-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "package": "com.raphael.riders",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
@@ -29,7 +31,9 @@
     },
     "plugins": [
       "expo-router",
-      "expo-localization"
+      "expo-localization",
+      "expo-font",
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true

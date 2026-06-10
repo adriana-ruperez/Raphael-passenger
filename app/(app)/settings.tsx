@@ -1,10 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Screen } from '@/src/components/layout/Screen';
 import { AppBar } from '@/src/components/navigation/AppBar';
-import { i18n, t } from '@/src/i18n';
 import { palette } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
 import { typography } from '@/src/theme/typography';
@@ -15,9 +14,8 @@ const SUPPORTED_LANGUAGES = ['es', 'en'] as const;
 type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 export default function SettingsScreen() {
-  const [language, setLanguage] = useState<SupportedLanguage>(
-    i18n.language.startsWith('en') ? 'en' : 'es',
-  );
+  const { t, i18n } = useTranslation();
+  const language = i18n.resolvedLanguage?.startsWith('en') ? 'en' : 'es';
 
   const languageLabels: Record<SupportedLanguage, string> = {
     en: t('settings.englishLabel'),
@@ -29,7 +27,6 @@ export default function SettingsScreen() {
       return;
     }
 
-    setLanguage(nextLanguage);
     void i18n.changeLanguage(nextLanguage);
   };
 

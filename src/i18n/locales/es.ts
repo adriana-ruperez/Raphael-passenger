@@ -78,6 +78,13 @@ export const es = {
       },
     },
     description: 'Reserva, consulta tus viajes o contacta con la oficina desde aquí.',
+    identity: {
+      closeLabel: 'Cerrar formulario de identificación',
+      eyebrow: 'Datos del pasajero',
+      saveLabel: 'Guardar mis datos',
+      title: 'Identifícate',
+      toggleLabel: 'Abrir formulario de identificación',
+    },
     kicker: 'App de pasajeros',
     title: 'Todo lo importante, en una sola pantalla',
   },

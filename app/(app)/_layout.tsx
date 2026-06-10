@@ -1,13 +1,15 @@
 import { Tabs } from 'expo-router';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
-import { t } from '@/src/i18n';
 import { palette } from '@/src/theme/colors';
 import { spacing } from '@/src/theme/spacing';
 import { typography } from '@/src/theme/typography';
 
 export default function AppLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{

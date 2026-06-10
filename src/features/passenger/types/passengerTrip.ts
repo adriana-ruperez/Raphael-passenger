@@ -4,7 +4,8 @@ export type PassengerTrip = {
   canActivate: boolean;
   canCancel: boolean;
   dropoffAddress: string;
-  etaMinutes: number | null;
+  eta?: string | number | null;
+  etaMinutes: string | number | null;
   id: string;
   eventType: PassengerTripEventType;
   patientName?: string;

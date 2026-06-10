@@ -65,7 +65,8 @@ function mapPatientEtaTrip(raw: unknown): PassengerTrip {
     canActivate: false,
     canCancel: false,
     dropoffAddress: isDropoff ? dropoffAddress : '',
-    etaMinutes: pickEtaMinutes(trip),
+    eta: pickEtaValue(trip),
+    etaMinutes: pickEtaValue(trip),
     eventType: isPickup ? 'pickup' : isDropoff ? 'dropoff' : 'unknown',
     id,
     patientName: pickFirstString(trip, ['patient', 'patientName']),
@@ -94,18 +95,19 @@ function pickFirstString(source: Record<string, unknown>, keys: string[]): strin
   return undefined;
 }
 
-function pickEtaMinutes(source: Record<string, unknown>): number | null {
-  const directEta = source.etaMinutes;
-  if (typeof directEta === 'number') {
-    return directEta;
+function pickEtaValue(source: Record<string, unknown>): string | number | null {
+  const eta = source.eta;
+  if (typeof eta === 'string' && eta.trim()) {
+    return eta.trim();
   }
 
-  const eta = source.eta;
-  if (typeof eta === 'string') {
-    const match = eta.match(/\d+/);
-    if (match) {
-      return Number(match[0]);
-    }
+  const directEta = source.etaMinutes;
+  if (typeof directEta === 'string' && directEta.trim()) {
+    return directEta.trim();
+  }
+
+  if (typeof directEta === 'number' && Number.isFinite(directEta)) {
+    return directEta;
   }
 
   return null;
